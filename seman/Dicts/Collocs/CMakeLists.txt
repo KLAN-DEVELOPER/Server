@@ -1,3 +1,0 @@
-project(Collocs)
-ConvertStructDict(Collocs)
-

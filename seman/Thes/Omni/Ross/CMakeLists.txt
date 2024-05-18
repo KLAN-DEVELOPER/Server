@@ -1,3 +1,0 @@
-project(OmniRoss)
-ConvertStructDict(OmniRoss)
-

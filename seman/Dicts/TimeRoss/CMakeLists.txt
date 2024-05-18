@@ -1,3 +1,0 @@
-project(TimeRoss)
-ConvertStructDict(TimeRoss)
-

@@ -1,3 +1,0 @@
-project(Aoss)
-ConvertStructDict(Aoss)
-

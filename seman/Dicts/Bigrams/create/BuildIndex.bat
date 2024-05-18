@@ -1,1 +1,0 @@
-BigramsIndex bigrams.txt

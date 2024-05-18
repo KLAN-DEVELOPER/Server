@@ -1,3 +1,0 @@
-project(EngCollocs)
-ConvertStructDict(EngCollocs)
-
