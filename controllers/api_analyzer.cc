@@ -6,6 +6,18 @@ IKNManager * klanManager = GenerateAPIManager();
 IKNEngine* klanEngine = klanManager->GetEngine();
 
 
+
+void runKlanMorphAnalyzer(char* text) {
+    uint len = 0;
+    t_errno err = klanEngine->Run(text, 0, &len);
+
+    IKNResultList* res = klanEngine->GetResultList();
+    auto count = res->GetCount(0);
+
+    printf("Results count: %d\n", count);
+}
+
+
 // Add definition of your processing function here
 void analyzer::responsePing(
     const HttpRequestPtr& req,
@@ -40,6 +52,7 @@ void analyzer::runMorphAnalyze(
     
     std::cout << *convertedText << std::endl;
 
+    runKlanMorphAnalyzer(convertedText);
 
     resp->setStatusCode(k200OK);
     callback(resp);
