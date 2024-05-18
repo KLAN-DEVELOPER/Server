@@ -19,7 +19,7 @@ endif ()
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-add_executable(${PROJECT_NAME} main.cc)
+add_executable(${PROJECT_NAME} main.cc src/modules/unicodeConvertor.cc)
 
 # ##############################################################################
 # If you include the drogon source code locally in your project, use this method
@@ -75,20 +75,9 @@ target_sources(${PROJECT_NAME}
 add_subdirectory(test)
 
 
-# Our changes
-# add_library(klan SHARED IMPORTED)
-# set_target_properties(klan PROPERTIES IMPORTED_LOCATION "${CMAKE_CURRENT_SOURCE_DIR}/libs/libKlanKernel.so")
-# target_include_directories(klan INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}/libs/klanHeaders")
-# target_link_libraries(${PROJECT_NAME} PRIVATE klan)
-# target_link_libraries(${PROJECT_NAME} PUBLIC icuio icuuc)
-
-# Loading ini files of klan
-# file(GLOB INI_FILES "${CMAKE_CURRENT_SOURCE_DIR}/libs/klanInitFiles/*.ini")
-# foreach(INI_FILE ${INI_FILES})
-#     file(COPY ${INI_FILE} DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-# endforeach()
-
 target_include_directories(${PROJECT_NAME} PUBLIC libs/klanHeaders)
 target_link_directories(${PROJECT_NAME} PUBLIC libs/klan)
 target_link_libraries(${PROJECT_NAME} PUBLIC KlanKernel icuio icuuc)
 
+
+#Добавление .cc файлов в сборку

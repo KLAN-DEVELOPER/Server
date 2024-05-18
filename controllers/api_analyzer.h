@@ -4,6 +4,7 @@
 #include <../../libs/klanHeaders/IKNManager.h>
 #include <../../libs/klanHeaders/KNKernel.h>
 #include <../../libs/klanHeaders/IKNEngine.h>
+#include <../../src/modules/unicodeConvertor.h>
 
 
 using namespace drogon;

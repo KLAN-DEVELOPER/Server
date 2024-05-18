@@ -36,7 +36,11 @@ void analyzer::runMorphAnalyze(
     const char *text = (*reqData)["text"].asCString();
     std::cout << *text << std::endl;
     
+    char *convertedText = convertToCP1251(text);
     
+    std::cout << *convertedText << std::endl;
+
+
     resp->setStatusCode(k200OK);
     callback(resp);
 }
