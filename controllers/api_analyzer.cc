@@ -7,6 +7,27 @@ IKNEngine* klanEngine = klanManager->GetEngine();
 
 
 
+
+void getWordData(IKNWordShell *shell ) {
+    std::cout << "=====WORD=====" << std::endl;
+    
+    if (!shell) {
+        std::cout << "word shell is undefined " << std::endl;
+        return;
+    }
+    
+    std::cout << "word position " << shell->GetPosId() << std::endl;
+    std::cout << "word form " << shell->GetForm() << std::endl;
+    IKNWord *word = shell->GetWord();
+    char wordStem[500];
+    char * wordStemPointer = wordStem;
+    word->GetStem(wordStemPointer);
+    std::cout << "word value " << wordStem << std::endl;
+    std::cout << "word part speach " << word->GetPartSpeech() << std::endl;
+}
+
+
+
 void runKlanMorphAnalyzer(char* text) {
     uint len = 0;
     t_errno err = klanEngine->Run(text, 0, &len);
@@ -14,7 +35,19 @@ void runKlanMorphAnalyzer(char* text) {
     IKNResultList* res = klanEngine->GetResultList();
     auto count = res->GetCount(0);
 
-    printf("Results count: %d\n", count);
+    IKNResultList *analyzeResult = klanEngine->GetResultList();
+    analyzeResult->InitWordsList();
+    int wordCount = analyzeResult->GetCount(0);
+    
+    if (wordCount == 0) {
+        std::cout << "wordCount is 0. No one word have been analyzed" << std::endl;
+        return;
+    }
+    
+    for (size_t i = 1; i < wordCount; i++)
+    {
+        getWordData(analyzeResult->GetNextWordShell());
+    }
 }
 
 
