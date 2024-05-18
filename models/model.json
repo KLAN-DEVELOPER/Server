@@ -1,0 +1,17 @@
+{
+    "db_clients":[
+      {
+        "name":"default",
+        "rdbms": "postgresql",
+        "host": "",
+        "port": 5432,
+        "dbname": "klandb",
+        "user": "detocs",
+        "passwd": "1234",
+        "is_fast": false,
+        "connection_number": 1,
+        "filename": ""
+      }
+    ]
+  }
+  
