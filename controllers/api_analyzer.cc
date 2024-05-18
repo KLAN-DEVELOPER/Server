@@ -24,7 +24,7 @@ void analyzer::runMorphAnalyze(
 {
     auto resp = HttpResponse::newHttpResponse();
     auto reqData = req->getJsonObject();
-    std::cout << *reqData << std::endl;
+    
     if (!reqData)
     {
         resp->setStatusCode(k400BadRequest);
@@ -32,6 +32,10 @@ void analyzer::runMorphAnalyze(
         callback(resp);
         return;
     }
+
+    const char *text = (*reqData)["text"].asCString();
+    std::cout << *text << std::endl;
+    
     
     resp->setStatusCode(k200OK);
     callback(resp);
