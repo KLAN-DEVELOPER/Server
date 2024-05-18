@@ -1,10 +1,9 @@
 #include <drogon/drogon.h>
 #include <iostream>
-#include <../libs/klanHeaders/IKNManager.h>
-#include <../libs/klanHeaders/KNKernel.h>
-#include <../libs/klanHeaders/IKNEngine.h>
+// #include <../libs/klanHeaders/IKNManager.h>
+// #include <../libs/klanHeaders/KNKernel.h>
+// #include <../libs/klanHeaders/IKNEngine.h>
 #include <../libs/klanHeaders/KNMacros.h>
-
 
 #include <cstdio>
 #include <memory>
@@ -34,25 +33,24 @@ char* convertToCP1251(const char* utf8)
 
 int main() {
 
-    // setlocale(LC_CTYPE, "Russia");
-    const char* text = "TEST"; 
+    // const char* text = "TEST"; 
 
-    IKNManager * klanManager = GenerateAPIManager();
-    IKNEngine* klanEngine = klanManager->GetEngine();
-    
-    char *testEngChar = convertToCP1251(text);
-    std::cout << testEngChar << std::endl;
+    // // IKNManager * klanManager = GenerateAPIManager();
+    // // IKNEngine* klanEngine = klanManager->GetEngine();
 
-    uint len = 0;
-    t_errno err = klanEngine->Run(testEngChar, 0, &len);
+    // char *testEngChar = convertToCP1251(text);
+    // std::cout << testEngChar << std::endl;
 
-    IKNResultList* res = klanEngine->GetResultList();
-    auto count = res->GetCount(1);
+    // uint len = 0;
+    // t_errno err = klanEngine->Run(testEngChar, 0, &len);
 
-    printf("Results count: %d\n", count);
+    // IKNResultList* res = klanEngine->GetResultList();
+    // auto count = res->GetCount(1);
 
-    // drogon::app().addListener("0.0.0.0", 8080);
-    // drogon::app().loadConfigFile("../models/model.json");
-    // drogon::app().run();
+    // printf("Results count: %d\n", count);
+
+    drogon::app().addListener("0.0.0.0", 8080);
+    drogon::app().loadConfigFile("../models/model.json");
+    drogon::app().run();
     return 0;
 }
