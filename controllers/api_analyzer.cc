@@ -3,9 +3,16 @@
 using namespace api;
 
 IKNManager * klanManager = GenerateAPIManager();
-IKNEngine* klanEngine = klanManager->GetEngine();
+IKNEngine* klanEngine    = klanManager->GetEngine();
 
 
+struct WordData {
+    const char *form;  //Нормальная форма слова
+    char stemma;       //Основа слова
+    const  char *partOfSpeech;
+    char morphProperty;
+
+};
 
 
 void getWordData(IKNWordShell *shell ) {
@@ -15,15 +22,25 @@ void getWordData(IKNWordShell *shell ) {
         std::cout << "word shell is undefined " << std::endl;
         return;
     }
-    
-    std::cout << "word position " << shell->GetPosId() << std::endl;
-    std::cout << "word form " << shell->GetForm() << std::endl;
+
+    WordData wordData;
+
     IKNWord *word = shell->GetWord();
-    char wordStem[500];
-    char * wordStemPointer = wordStem;
-    word->GetStem(wordStemPointer);
-    std::cout << "word value " << wordStem << std::endl;
-    std::cout << "word part speach " << word->GetPartSpeech() << std::endl;
+    word->GetStem(&wordData.stemma);
+    shell->GetPropertyAsString(&wordData.morphProperty);
+    
+    wordData.form         =  shell->GetForm();
+    wordData.partOfSpeech =  word->GetPartSpeech();
+
+
+    // std::cout << "word position " << shell->GetPosId() << std::endl;
+    // std::cout << "word form " << shell->GetForm() << std::endl;
+    // IKNWord *word = shell->GetWord();
+    // char wordStem[500];
+    // char * wordStemPointer = wordStem;
+    // word->GetStem(wordStemPointer);
+    // std::cout << "word value " << wordStem << std::endl;
+    // std::cout << "word part speach " << word->GetPartSpeech() << std::endl;
 }
 
 
@@ -35,7 +52,7 @@ void runKlanMorphAnalyzer(char* text) {
     IKNResultList* res = klanEngine->GetResultList();
     auto count = res->GetCount(0);
 
-    IKNResultList *analyzeResult = klanEngine->GetResultList();
+    IKNResultList *analyzeResult = klanGetPropertyAsStringEngine->GetResultList();
     analyzeResult->InitWordsList();
     int wordCount = analyzeResult->GetCount(0);
     
@@ -44,7 +61,7 @@ void runKlanMorphAnalyzer(char* text) {
         return;
     }
     
-    for (size_t i = 1; i < wordCount; i++)
+    for (size_t i = 1; i < wordCount; i++)GetPropertyAsString
     {
         getWordData(analyzeResult->GetNextWordShell());
     }
