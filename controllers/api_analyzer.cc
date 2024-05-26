@@ -15,32 +15,63 @@ struct WordData {
 };
 
 
-void getWordData(IKNWordShell *shell ) {
-    std::cout << "=====WORD=====" << std::endl;
-    
+
+// void AddTerminToDataBase(WordData *data) {
+//     auto clientPtr = drogon::app().getDbClient();
+//     try {
+//         auto result = clientPtr->execSqlSync("select * from users");
+//     } catch (const drogon::orm::DrogonDbException &e)
+//     {
+//         std::cerr << "error:" << e.base().what() << std::endl;
+//     }
+// }
+
+
+/**
+ * Геттер основых параметров термина.
+ * @param shell интерфейс термина.
+ * @return WordData - объект, содержащий 
+ * номральную форму, основу слова, часть речи и морфологические параметры.
+ */
+WordData* getWordData(IKNWordShell *shell ) {
     if (!shell) {
         std::cout << "word shell is undefined " << std::endl;
-        return;
+        return nullptr;
     }
 
     WordData wordData;
-
+    
     IKNWord *word = shell->GetWord();
     word->GetStem(&wordData.stemma);
     shell->GetPropertyAsString(&wordData.morphProperty);
     
     wordData.form         =  shell->GetForm();
     wordData.partOfSpeech =  word->GetPartSpeech();
+    
+    WordData* ptr = &wordData;
+    return ptr;
+}
 
+/**
+ * Геттер парадигмы термина. 
+ * @param shell интерфейс термина.
+ * @return WordParadigm - объект, содержащий.
+ */
+void getWordParadigm(IKNWordShell *shell) {
+    IKNWord *word = shell->GetWord();
+    IKNParadigm* wordParadigm = word->GetParadigm();
 
-    // std::cout << "word position " << shell->GetPosId() << std::endl;
-    // std::cout << "word form " << shell->GetForm() << std::endl;
-    // IKNWord *word = shell->GetWord();
-    // char wordStem[500];
-    // char * wordStemPointer = wordStem;
-    // word->GetStem(wordStemPointer);
-    // std::cout << "word value " << wordStem << std::endl;
-    // std::cout << "word part speach " << word->GetPartSpeech() << std::endl;
+    std::cout << "Word paradigm count: " << wordParadigm->GetCount() << std::endl;
+
+    for(int i = 0; i < wordParadigm->GetCount(); i++) {
+        std::cout << "Word ending: " << wordParadigm->GetFlex(i) << std::endl;
+    }
+
+    // Количество приставок всегда равно 0. Не понятно ошибка это или просто текст не подходящий. 
+    // std::cout << "Word paradigm with prefix count: " << wordParadigm->GetCountPref() << std::endl;
+    // for(int i = 0; i < wordParadigm->GetCountPref(); i++) {
+    //     std::cout << "Word ending with prefix: " << wordParadigm->GetFlexPref(i) << std::endl;
+    // }
 }
 
 
@@ -52,18 +83,19 @@ void runKlanMorphAnalyzer(char* text) {
     IKNResultList* res = klanEngine->GetResultList();
     auto count = res->GetCount(0);
 
-    IKNResultList *analyzeResult = klanGetPropertyAsStringEngine->GetResultList();
-    analyzeResult->InitWordsList();
-    int wordCount = analyzeResult->GetCount(0);
+    res->InitWordsList();
+    int wordCount = res->GetCount(0);
     
     if (wordCount == 0) {
         std::cout << "wordCount is 0. No one word have been analyzed" << std::endl;
         return;
     }
     
-    for (size_t i = 1; i < wordCount; i++)GetPropertyAsString
+    for (size_t i = 1; i < wordCount; i++)
     {
-        getWordData(analyzeResult->GetNextWordShell());
+        IKNWordShell *shell = res->GetNextWordShell();
+        getWordData(shell);
+        getWordParadigm(shell);
     }
 }
 
