@@ -1,0 +1,50 @@
+version: "3.5"
+
+services:
+  db:
+    image: postgres:14
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: klan
+      PGDATA: /data/postgres
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - "5432:5432"
+    networks:
+      klan: {}
+
+  lbu:
+    build:
+      context: lbu
+    environment:
+      LIQUIBASE_COMMAND_USERNAME: postgres
+      LIQUIBASE_COMMAND_PASSWORD : postgres
+      LIQUIBASE_COMMAND_URL: jdbc:postgresql://db:5432/klan
+      LIQUIBASE_COMMAND_CHANGELOG_FILE: /db-migrations/changelog.xml
+    depends_on:
+      db:
+        condition: service_started
+    command:
+      - update
+    networks:
+      klan: {}
+
+  server:
+    build:
+      context: server
+    depends_on:
+      db:
+        condition: service_started
+      lbu:
+        condition: service_started
+    networks:
+      klan: {}
+
+volumes:
+  postgres:
+
+networks:
+  klan:
+    external: true
