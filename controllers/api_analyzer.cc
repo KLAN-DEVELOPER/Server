@@ -1,4 +1,5 @@
 #include "api_analyzer.h"
+#include <vector>
 
 using namespace api;
 
@@ -12,6 +13,11 @@ struct WordData {
     const  char *partOfSpeech;
     char morphProperty;
 
+};
+
+struct WordParadigm {
+    std::vector<const char*> endings;
+    char morphParameters;
 };
 
 
@@ -57,15 +63,31 @@ WordData* getWordData(IKNWordShell *shell ) {
  * @param shell интерфейс термина.
  * @return WordParadigm - объект, содержащий.
  */
-void getWordParadigm(IKNWordShell *shell) {
+WordParadigm* getWordParadigm(IKNWordShell *shell) {
     IKNWord *word = shell->GetWord();
     IKNParadigm* wordParadigm = word->GetParadigm();
-
-    std::cout << "Word paradigm count: " << wordParadigm->GetCount() << std::endl;
+    WordParadigm paradigmContainer;
+    WordParadigm* paradigmPtr = &paradigmContainer;
+    // std::cout << "Word paradigm count: " << wordParadigm->GetCount() << std::endl;
 
     for(int i = 0; i < wordParadigm->GetCount(); i++) {
-        std::cout << "Word ending: " << wordParadigm->GetFlex(i) << std::endl;
+        paradigmContainer.endings.push_back(wordParadigm->GetFlex(i));
     }
+
+    return paradigmPtr
+    // Количество морфологических признаков всегда равно 0.
+    //  Не понятно ошибка это или просто текст не подходящий. 
+    // for(int i = 0; i < wordParadigm->GetCount(); i++) {
+    //     std::cout << "Word ending: " << wordParadigm->GetFlex(i) << std::endl;
+    
+    //     std::cout << "Paradigm group count: " << wordParadigm->GetGroupCount(i) << std::endl;
+    //     for(int j = 0; j < wordParadigm->GetGroupCount(i); j++) {
+    //         char oProp[100];
+    //         char *oPropPtr = oProp;
+    //         std::cout << "Paradimg morph data: " << wordParadigm->GetGroupAsString(i, j, oPropPtr) << std::endl;
+    //     }
+
+    // }
 
     // Количество приставок всегда равно 0. Не понятно ошибка это или просто текст не подходящий. 
     // std::cout << "Word paradigm with prefix count: " << wordParadigm->GetCountPref() << std::endl;
