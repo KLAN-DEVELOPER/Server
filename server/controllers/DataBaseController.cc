@@ -6,21 +6,21 @@ std::function<void (const HttpResponsePtr &)> &&callback
 )
 {
     std::cout << "[GET]" << "ALL_USERS" << std::endl;
-    auto clientPtr = drogon::app().getDbClient();
+    auto clientPtr = drogon::app().getDbClient("klan");
     try
     {
         
         std::cout << "[GET]" << "ALL_USERS" << "Start getting DbClient pointer"<< std::endl;
-        auto result = clientPtr->execSqlSync("select * from users");
+        auto result = clientPtr->execSqlSync("select * from dictionary");
         std::cout << "[GET]" << "ALL_USERS" << "Got DbClient pointer"<< std::endl;
         
         Json::Value ret;
-        ret["users"]= Json::arrayValue;
+        ret["name"]= Json::arrayValue;
         
         int i = 0;
         for (auto row : result)
         {
-            ret["users"][i] = row["login"].as<std::string>();
+            ret["name"][i] = row["name"].as<std::string>();
             i++;
         }
 

@@ -74,7 +74,7 @@ WordParadigm* getWordParadigm(IKNWordShell *shell) {
         paradigmContainer.endings.push_back(wordParadigm->GetFlex(i));
     }
 
-    return paradigmPtr
+    return paradigmPtr;
     // Количество морфологических признаков всегда равно 0.
     //  Не понятно ошибка это или просто текст не подходящий. 
     // for(int i = 0; i < wordParadigm->GetCount(); i++) {
@@ -116,8 +116,8 @@ void runKlanMorphAnalyzer(char* text) {
     for (size_t i = 1; i < wordCount; i++)
     {
         IKNWordShell *shell = res->GetNextWordShell();
-        getWordData(shell);
-        getWordParadigm(shell);
+//        getWordData(shell);
+//        getWordParadigm(shell);
     }
 }
 
@@ -138,6 +138,7 @@ void analyzer::runMorphAnalyze(
     std::function<void (const HttpResponsePtr &)> &&callback
 )
 {
+    std::cout << "[POST] /analyzer/text" << std::endl;
     auto resp = HttpResponse::newHttpResponse();
     auto reqData = req->getJsonObject();
     
@@ -150,12 +151,9 @@ void analyzer::runMorphAnalyze(
     }
 
     const char *text = (*reqData)["text"].asCString();
-    std::cout << *text << std::endl;
-    
+
     char *convertedText = convertToCP1251(text);
     
-    std::cout << *convertedText << std::endl;
-
     runKlanMorphAnalyzer(convertedText);
 
     resp->setStatusCode(k200OK);

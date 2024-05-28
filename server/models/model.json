@@ -1,17 +1,27 @@
 {
-    "db_clients":[
-      {
-        "name":"default",
-        "rdbms": "postgresql",
-        "host": "",
-        "port": 5432,
-        "dbname": "klandb",
-        "user": "detocs",
-        "passwd": "1234",
-        "is_fast": false,
-        "connection_number": 1,
-        "filename": ""
-      }
-    ]
+  "db_clients": [
+    {
+      "name": "klan",
+      "rdbms": "postgresql",
+      "host": "db",
+      "port": 5432,
+      "dbname": "klan",
+      "user": "postgres",
+      "passwd": "postgres",
+      "is_fast": false,
+      "connection_number": 1,
+      "filename": ""
+    }
+  ],
+  "app": {
+    "run_as_daemon": false,
+    "relaunch_on_error": true,
+    "log": {
+      "log_path": "/opt/server/build",
+      "logfile_base_name": "",
+      "log_size_limit": 100000000,
+      "log_level": "TRACE"
+    }
   }
+}
   

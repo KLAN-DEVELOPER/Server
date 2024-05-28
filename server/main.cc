@@ -22,6 +22,7 @@ int main() {
 
     drogon::app().addListener("0.0.0.0", 8080);
     drogon::app().loadConfigFile("../models/model.json");
+    drogon::app().areAllDbClientsAvailable();
     drogon::app().run();
     return 0;
 }
