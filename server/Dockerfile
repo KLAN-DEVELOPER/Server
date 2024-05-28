@@ -36,7 +36,8 @@ RUN make
 
 RUN mkdir /opt || true
 RUN mkdir /opt/server
-ADD build /opt/server
+RUN mkdir /opt/server/build
+
 ADD controllers /opt/server
 ADD libs /opt/server
 RUN mkdir /opt/server/src
