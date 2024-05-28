@@ -72,11 +72,11 @@ target_sources(${PROJECT_NAME}
 
 # ##############################################################################
 
-add_subdirectory(test)
+#add_subdirectory(test)
 
 
 target_include_directories(${PROJECT_NAME} PUBLIC libs/klanHeaders)
-target_link_directories(${PROJECT_NAME} PUBLIC libs/klan)
+target_link_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR})
 target_link_libraries(${PROJECT_NAME} PUBLIC KlanKernel icuio icuuc)
 
 
