@@ -24,15 +24,16 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
     wget
 
 
-WORKDIR /opt
+WORKDIR /
 RUN apt-get install --reinstall ca-certificates
-# RUN git clone https://github.com/drogonframework/drogon
+RUN git clone https://github.com/drogonframework/drogon.git
 
-ADD ext/drogon /opt/drogon
-WORKDIR /opt/drogon
+WORKDIR /drogon
 RUN git submodule update --init
 
-WORKDIR /opt/drogon/build
+#ADD ext/drogon /opt/drogon
+
+WORKDIR /drogon/build
 RUN cmake ..
 RUN make install
 RUN make
