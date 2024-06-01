@@ -10,4 +10,7 @@
         http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
     <include file="2024/01-create-dictionary-table.xml" relativeToChangelogFile="true"/>
     <include file="2024/02-create-source-table.xml" relativeToChangelogFile="true"/>
+    <include file="2024/03-create-words-table.xml" relativeToChangelogFile="true"/>
+    <include file="2024/04-insert-default-dictionary-data.xml" relativeToChangelogFile="true"/>
+    <include file="2024/05-define-addWord-procedure.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>
