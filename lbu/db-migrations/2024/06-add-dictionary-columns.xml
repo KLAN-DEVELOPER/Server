@@ -1,0 +1,22 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="add-dictionary-column-1" author="d.konshin">
+        <addColumn catalogName="cat"
+                   schemaName= "public"
+                   tableName="dictionary">
+            <column name="user_id"
+                    type="integer"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="add-dictionary-column-2" author="d.konshin">
+        <addForeignKeyConstraint  baseColumnNames="user_id"
+                                  baseTableName="dictionary"
+                                  constraintName="fk_dictionary_users"
+                                  onUpdate="RESTRICT"
+                                  referencedColumnNames="id"
+                                  referencedTableName="users"
+                                  validate="true"/>
+    </changeSet>
+</databaseChangeLog>
