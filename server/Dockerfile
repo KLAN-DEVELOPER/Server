@@ -4,6 +4,7 @@ LABEL Description="Build environment"
 
 ENV HOME /root
 ENV DEBIAN_FRONTEND=noninteractive
+ENV RML=/opt/server/seman
 
 SHELL ["/bin/bash", "-c"]
 
@@ -56,6 +57,8 @@ ADD src/modules/unicodeConvertor.cc /opt/server/src/modules
 ADD models /opt/server/models
 ADD controllers /opt/server/controllers
 ADD libs /opt/server/libs
+ADD seman /opt/server/seman
+
 
 #RUN mkdir /opt/server/build
 
